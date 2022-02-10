@@ -42,12 +42,16 @@ document.addEventListener('DOMContentLoaded', function () {
       let random = Math.random();
       if(random >= 0.5)
       {
-         updateHeads();
+         headsCount++;
+         updatePennyImage(pennyImageHeads);
+         updateMessage(messageHeads);
          updateTotals();
       }
       else
       {
-         updateTails();
+         tailsCount++;
+         updatePennyImage(pennyImageTails);
+         updateMessage(messageTails);
          updateTotals();
       }
    });
@@ -65,18 +69,6 @@ function updatePennyImage(pennyImageId) {
 
 function updateMessage(message) {
    h3message.textContent = message;
-}
-
-function updateHeads() {
-   headsCount++;
-   updatePennyImage(pennyImageHeads);
-   updateMessage(messageHeads);
-}
-
-function updateTails() {
-   tailsCount++;
-   updatePennyImage(pennyImageTails);
-   updateMessage(messageTails);
 }
 
 function updateTotals() {
