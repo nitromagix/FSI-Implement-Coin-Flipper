@@ -69,3 +69,13 @@ td {
     padding: 5px;
     font-weight: bold;
 }
+
+#buttonsContainer{
+   border: 1px solid black;
+   padding: 15px;
+}
+
+#penny-image{
+   width: 250px;
+   height: 250px;
+}

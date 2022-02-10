@@ -1,27 +1,95 @@
 // TODO: Declare any global variables we need
 
+const pennyImageHeads = 'penny-heads';
+const pennyImageTails = 'penny-tails';
+const messageHeads = 'You Flipped Heads!';
+const messageTails = 'You Flipped Tails!';
+const messageStart = 'Let\'s Get Rolling!';
+
+const imageContainer = document.querySelector('#imageContainer');
+const buttonsContainer = document.querySelector('#buttonsContainer');
+const messageContainer = document.querySelector('#messageContainer');
+const tdHeadsCount = document.querySelector('#heads');
+const tdHeadsPercent = document.querySelector('#heads-percent');
+const tdTailsCount = document.querySelector('#tails');
+const tdTailsPercent = document.querySelector('#tails-percent');
+const pennyImage = document.createElement('img');
+pennyImage.setAttribute('id', 'penny-image');
+imageContainer.append(pennyImage);
+const buttonFlip = document.createElement('button');
+buttonFlip.setAttribute('id', 'flip');
+buttonFlip.textContent = 'Flip The Penny!';
+buttonsContainer.append(buttonFlip);
+const buttonClear = document.createElement('button');
+buttonClear.setAttribute('id', 'clear');
+buttonClear.textContent = 'Clear Scoreboard';
+buttonsContainer.append(buttonClear);
+const h3message = document.createElement('h3');
+h3message.setAttribute('id', 'message');
+messageContainer.append(h3message);
+
+let headsCount = 0;
+let tailsCount = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
-    // This is just a sanity check to make sure your JavaScript script is getting loaded
-    // You can remove it once you see it in your browser console in the developer tools
-    console.log('Hi')
+   // This is just a sanity check to make sure your JavaScript script is getting loaded
+   // You can remove it once you see it in your browser console in the developer tools
+   console.log('Hi')
 
-    // TODO: Add event listener and handler for flip and clear buttons
+   updatePennyImage(pennyImageHeads);
+   updateMessage(messageStart);
+   buttonFlip.addEventListener('click', function(){
+      let random = Math.random();
+      if(random >= 0.5)
+      {
+         updateHeads();
+         updateTotals();
+      }
+      else
+      {
+         updateTails();
+         updateTotals();
+      }
+   });
 
-    // Flip Button Click Handler
-        // TODO: Determine flip outcome
-        // TODO: Update image and status message in the DOM
-
-        // Update the scorboard
-        // TODO: Calculate the total number of rolls/flips
-        // Make variables to track the percentages of heads and tails
-        // TODO: Use the calculated total to calculate the percentages
-        // HINT: Make sure not to divide by 0! (if total is 0, percent will be 0 as well)
-        // TODO: Update the display of each table cell
-
-
-    // Clear Button Click Handler
-        // TODO: Reset global variables to 0
-        // TODO: Update the scoreboard (same logic as in flip button click handler)
-
+   buttonClear.addEventListener('click', function(){
+      headsCount = tailsCount = 0;
+      updateTotals();
+      updateMessage(messageStart);
+     });
 })
+
+function updatePennyImage(pennyImageId) {
+   pennyImage.setAttribute('src', `assets/images/${pennyImageId}.jpg`);
+}
+
+function updateMessage(message) {
+   h3message.textContent = message;
+}
+
+function updateHeads() {
+   headsCount++;
+   updatePennyImage(pennyImageHeads);
+   updateMessage(messageHeads);
+}
+
+function updateTails() {
+   tailsCount++;
+   updatePennyImage(pennyImageTails);
+   updateMessage(messageTails);
+}
+
+function updateTotals() {
+   let totalCount = headsCount + tailsCount
+   tdHeadsCount.textContent = headsCount;
+   tdHeadsPercent.textContent = getPercentage(headsCount, totalCount);
+   tdTailsCount.textContent = tailsCount;
+   tdTailsPercent.textContent = getPercentage(tailsCount, totalCount);
+}
+
+function getPercentage(count, totalCount){
+   if (totalCount > 0) {
+      return `${Math.round(count/totalCount*100)}%`
+   }
+   return '0%';
+}
